@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95482151E32500F7CBE1 /* AppDelegate.swift */; };
-		BEBD954B2151E32500F7CBE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD954A2151E32500F7CBE1 /* ViewController.swift */; };
-		BEBD954E2151E32500F7CBE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBD954C2151E32500F7CBE1 /* Main.storyboard */; };
 		BEBD95512151E32500F7CBE1 /* Shows.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */; };
 		BEBD95532151E32700F7CBE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEBD95522151E32700F7CBE1 /* Assets.xcassets */; };
 		BEBD95562151E32700F7CBE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBD95542151E32700F7CBE1 /* LaunchScreen.storyboard */; };
 		BEBD95612151E32700F7CBE1 /* ShowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95602151E32700F7CBE1 /* ShowsTests.swift */; };
+		BEBD95712151E3C800F7CBE1 /* LLNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95702151E3C800F7CBE1 /* LLNetworkManager.swift */; };
+		BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95722151E46700F7CBE1 /* SHWNetworking.swift */; };
+		BEBD95762151E9AC00F7CBE1 /* SHWShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95752151E9AC00F7CBE1 /* SHWShow.swift */; };
+		BEBD95792151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95772151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift */; };
+		BEBD957A2151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEBD95782151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,8 +32,6 @@
 /* Begin PBXFileReference section */
 		BEBD95452151E32500F7CBE1 /* Shows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEBD95482151E32500F7CBE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BEBD954A2151E32500F7CBE1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BEBD954D2151E32500F7CBE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEBD95502151E32500F7CBE1 /* Shows.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shows.xcdatamodel; sourceTree = "<group>"; };
 		BEBD95522151E32700F7CBE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEBD95552151E32700F7CBE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +39,11 @@
 		BEBD955C2151E32700F7CBE1 /* ShowsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEBD95602151E32700F7CBE1 /* ShowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsTests.swift; sourceTree = "<group>"; };
 		BEBD95622151E32700F7CBE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEBD95702151E3C800F7CBE1 /* LLNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLNetworkManager.swift; sourceTree = "<group>"; };
+		BEBD95722151E46700F7CBE1 /* SHWNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWNetworking.swift; sourceTree = "<group>"; };
+		BEBD95752151E9AC00F7CBE1 /* SHWShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWShow.swift; sourceTree = "<group>"; };
+		BEBD95772151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWSearchShowsViewController.swift; sourceTree = "<group>"; };
+		BEBD95782151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWSearchShowsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +85,12 @@
 		BEBD95472151E32500F7CBE1 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
-				BEBD95482151E32500F7CBE1 /* AppDelegate.swift */,
-				BEBD954A2151E32500F7CBE1 /* ViewController.swift */,
-				BEBD954C2151E32500F7CBE1 /* Main.storyboard */,
-				BEBD95522151E32700F7CBE1 /* Assets.xcassets */,
-				BEBD95542151E32700F7CBE1 /* LaunchScreen.storyboard */,
-				BEBD95572151E32700F7CBE1 /* Info.plist */,
-				BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */,
+				BEBD956B2151E36400F7CBE1 /* AppDelegate */,
+				BEBD956E2151E3A800F7CBE1 /* DataManager */,
+				BEBD956F2151E3AF00F7CBE1 /* NetworkManager */,
+				BEBD95742151E99500F7CBE1 /* Objects */,
+				BEBD956D2151E37000F7CBE1 /* Support Files */,
+				BEBD956C2151E36B00F7CBE1 /* View Controllers */,
 			);
 			path = Shows;
 			sourceTree = "<group>";
@@ -97,6 +102,58 @@
 				BEBD95622151E32700F7CBE1 /* Info.plist */,
 			);
 			path = ShowsTests;
+			sourceTree = "<group>";
+		};
+		BEBD956B2151E36400F7CBE1 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD95482151E32500F7CBE1 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		BEBD956C2151E36B00F7CBE1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD95772151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift */,
+				BEBD95782151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BEBD956D2151E37000F7CBE1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD95522151E32700F7CBE1 /* Assets.xcassets */,
+				BEBD95542151E32700F7CBE1 /* LaunchScreen.storyboard */,
+				BEBD95572151E32700F7CBE1 /* Info.plist */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		BEBD956E2151E3A800F7CBE1 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		BEBD956F2151E3AF00F7CBE1 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD95702151E3C800F7CBE1 /* LLNetworkManager.swift */,
+				BEBD95722151E46700F7CBE1 /* SHWNetworking.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		BEBD95742151E99500F7CBE1 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				BEBD95752151E9AC00F7CBE1 /* SHWShow.swift */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,8 +238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEBD95562151E32700F7CBE1 /* LaunchScreen.storyboard in Resources */,
+				BEBD957A2151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib in Resources */,
 				BEBD95532151E32700F7CBE1 /* Assets.xcassets in Resources */,
-				BEBD954E2151E32500F7CBE1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,8 +258,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEBD95512151E32500F7CBE1 /* Shows.xcdatamodeld in Sources */,
-				BEBD954B2151E32500F7CBE1 /* ViewController.swift in Sources */,
 				BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */,
+				BEBD95792151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift in Sources */,
+				BEBD95712151E3C800F7CBE1 /* LLNetworkManager.swift in Sources */,
+				BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */,
+				BEBD95762151E9AC00F7CBE1 /* SHWShow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,14 +285,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		BEBD954C2151E32500F7CBE1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BEBD954D2151E32500F7CBE1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BEBD95542151E32700F7CBE1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -364,7 +416,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 95FQZ6MNT2;
-				INFOPLIST_FILE = Shows/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Shows/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -382,7 +434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 95FQZ6MNT2;
-				INFOPLIST_FILE = Shows/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Shows/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
