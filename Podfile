@@ -13,4 +13,5 @@ target 'Shows' do
   end
    
   pod 'AlamofireImage', '~> 3.4'
+  pod 'Disk',           '~> 0.4.0'
 end

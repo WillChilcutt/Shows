@@ -13,8 +13,10 @@
 		BEAD81A22153358300085B33 /* SHWEpisodesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD81A02153358300085B33 /* SHWEpisodesViewController.xib */; };
 		BEAD81A42153384B00085B33 /* SHWEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD81A32153384B00085B33 /* SHWEpisode.swift */; };
 		BEAD81A62153389300085B33 /* SHWImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD81A52153389300085B33 /* SHWImage.swift */; };
+		BEAD81A82153477D00085B33 /* SHWDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD81A72153477D00085B33 /* SHWDataManager.swift */; };
+		BEAD81AC21534CCE00085B33 /* SHWFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD81AA21534CCE00085B33 /* SHWFavoritesViewController.swift */; };
+		BEAD81AD21534CCF00085B33 /* SHWFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD81AB21534CCE00085B33 /* SHWFavoritesViewController.xib */; };
 		BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95482151E32500F7CBE1 /* AppDelegate.swift */; };
-		BEBD95512151E32500F7CBE1 /* Shows.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */; };
 		BEBD95532151E32700F7CBE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEBD95522151E32700F7CBE1 /* Assets.xcassets */; };
 		BEBD95562151E32700F7CBE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBD95542151E32700F7CBE1 /* LaunchScreen.storyboard */; };
 		BEBD95612151E32700F7CBE1 /* ShowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD95602151E32700F7CBE1 /* ShowsTests.swift */; };
@@ -44,9 +46,11 @@
 		BEAD81A02153358300085B33 /* SHWEpisodesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWEpisodesViewController.xib; sourceTree = "<group>"; };
 		BEAD81A32153384B00085B33 /* SHWEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWEpisode.swift; sourceTree = "<group>"; };
 		BEAD81A52153389300085B33 /* SHWImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWImage.swift; sourceTree = "<group>"; };
+		BEAD81A72153477D00085B33 /* SHWDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDataManager.swift; sourceTree = "<group>"; };
+		BEAD81AA21534CCE00085B33 /* SHWFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWFavoritesViewController.swift; sourceTree = "<group>"; };
+		BEAD81AB21534CCE00085B33 /* SHWFavoritesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWFavoritesViewController.xib; sourceTree = "<group>"; };
 		BEBD95452151E32500F7CBE1 /* Shows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEBD95482151E32500F7CBE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BEBD95502151E32500F7CBE1 /* Shows.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shows.xcdatamodel; sourceTree = "<group>"; };
 		BEBD95522151E32700F7CBE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEBD95552151E32700F7CBE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEBD95572151E32700F7CBE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,6 +124,15 @@
 			path = "Show Schedule";
 			sourceTree = "<group>";
 		};
+		BEAD81A921534CBD00085B33 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD81AA21534CCE00085B33 /* SHWFavoritesViewController.swift */,
+				BEAD81AB21534CCE00085B33 /* SHWFavoritesViewController.xib */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		BEBD953C2151E32500F7CBE1 = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +186,7 @@
 		BEBD956C2151E36B00F7CBE1 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BEAD81A921534CBD00085B33 /* Favorites */,
 				BEAD819E2153356D00085B33 /* Show Schedule */,
 				BEAD819D2153356400085B33 /* Search Shows */,
 			);
@@ -192,7 +206,7 @@
 		BEBD956E2151E3A800F7CBE1 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
-				BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */,
+				BEAD81A72153477D00085B33 /* SHWDataManager.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -302,6 +316,7 @@
 			files = (
 				BEBD95562151E32700F7CBE1 /* LaunchScreen.storyboard in Resources */,
 				BEBD957A2151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib in Resources */,
+				BEAD81AD21534CCF00085B33 /* SHWFavoritesViewController.xib in Resources */,
 				BEBD95532151E32700F7CBE1 /* Assets.xcassets in Resources */,
 				BEAD81A22153358300085B33 /* SHWEpisodesViewController.xib in Resources */,
 			);
@@ -344,11 +359,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Shows/Pods-Shows-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -380,12 +397,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEBD95512151E32500F7CBE1 /* Shows.xcdatamodeld in Sources */,
 				BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */,
+				BEAD81A82153477D00085B33 /* SHWDataManager.swift in Sources */,
 				BEAD81A12153358300085B33 /* SHWEpisodesViewController.swift in Sources */,
 				BEBD95792151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift in Sources */,
 				BEBD95712151E3C800F7CBE1 /* LLNetworkManager.swift in Sources */,
 				BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */,
+				BEAD81AC21534CCE00085B33 /* SHWFavoritesViewController.swift in Sources */,
 				BEAD81A42153384B00085B33 /* SHWEpisode.swift in Sources */,
 				BEBD95762151E9AC00F7CBE1 /* SHWShow.swift in Sources */,
 				BEAD81A62153389300085B33 /* SHWImage.swift in Sources */,
@@ -649,19 +667,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		BEBD954F2151E32500F7CBE1 /* Shows.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				BEBD95502151E32500F7CBE1 /* Shows.xcdatamodel */,
-			);
-			currentVersion = BEBD95502151E32500F7CBE1 /* Shows.xcdatamodel */;
-			path = Shows.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = BEBD953D2151E32500F7CBE1 /* Project object */;
 }

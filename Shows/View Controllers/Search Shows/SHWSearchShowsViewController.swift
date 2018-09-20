@@ -24,6 +24,17 @@ class SHWSearchShowsViewController : UIViewController
     {
         super.viewDidLoad()
         self.title = "Search"
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                                style: .done,
+                                                                target: self,
+                                                                action: #selector(self.handleUserPressedCancelButton))
+    }
+    
+    @objc private func handleUserPressedCancelButton()
+    {
+        self.presentingViewController?.dismiss(animated: true,
+                                               completion: nil)
     }
 }
 

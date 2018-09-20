@@ -36,6 +36,14 @@ struct SHWShow : Codable
     let officialSite    : String?
 }
 
+extension SHWShow : Equatable
+{
+    static func == (lhs: SHWShow, rhs: SHWShow) -> Bool
+    {
+        return lhs.id == rhs.id
+    }
+}
+
 enum SHWShowStatus : String, Codable
 {
     case ended          = "Ended"

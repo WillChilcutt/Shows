@@ -8,6 +8,24 @@
 
 import Foundation
 
+extension DateFormatter
+{
+    static let iso8601 : DateFormatter =
+    {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
+        return formatter
+    }()
+    
+    static let prettyPrint : DateFormatter =
+    {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, y"
+        
+        return formatter
+    }()
+}
+
 struct SHWEpisode : Codable
 {
     let id          : Int
@@ -20,7 +38,16 @@ struct SHWEpisode : Codable
     let summary     : String?
     let airdate     : String
     let airtime     : String
-    let airstamp    : String
+    let airstamp    : String?
+    
+    var originalDate : Date?
+    {   get
+        {
+            guard let airstamp = self.airstamp else { return nil }
+            
+            return DateFormatter.iso8601.date(from: airstamp)
+        }
+    }
 }
 
 extension Array where Element == SHWEpisode

@@ -34,7 +34,32 @@ class SHWEpisodesViewController : UIViewController
         
         self.title = self.show.name
         
+        if SHWDataManager.isShowFavorited(self.show) == true
+        {
+            self.setUnfavoriteButton()
+        }
+        else
+        {
+            self.setFavoriteButton()
+        }
+        
         self.getEpisodes()
+    }
+    
+    private func setFavoriteButton()
+    {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Favorite"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(self.favoriteShow))
+    }
+    
+    private func setUnfavoriteButton()
+    {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Favorited"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(self.unfavoriteShow))
     }
     
     private func getEpisodes()
@@ -53,6 +78,18 @@ class SHWEpisodesViewController : UIViewController
                     self.tableView.reloadData()
             }
         }
+    }
+    
+    @objc private func favoriteShow()
+    {
+        SHWDataManager.favoriteShow(self.show)
+        self.setUnfavoriteButton()
+    }
+    
+    @objc private func unfavoriteShow()
+    {
+        SHWDataManager.unfavoriteShow(self.show)
+        self.setFavoriteButton()
     }
 }
 
@@ -86,8 +123,12 @@ extension SHWEpisodesViewController : UITableViewDataSource
         {
             let episode = episodes[indexPath.row]
             
-            cell?.textLabel?.text       = episode.name
-            cell?.detailTextLabel?.text = episode.airstamp
+            cell?.textLabel?.text = episode.name
+            
+            if let date = episode.originalDate
+            {
+                cell?.detailTextLabel?.text = DateFormatter.prettyPrint.string(from: date)
+            }
         }
         
         return cell!
