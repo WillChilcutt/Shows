@@ -75,7 +75,11 @@ class SHWEpisodesViewController : UIViewController
                 case .success(let episodes):
                     self.episodes.removeAll()
                     self.episodes.append(contentsOf: episodes)
-                    self.tableView.reloadData()
+                    
+                    DispatchQueue.main.async
+                    {
+                        self.tableView.reloadData()
+                    }
             }
         }
     }
