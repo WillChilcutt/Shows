@@ -14,19 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 {
     var window: UIWindow?
     
-    private var vc : UIViewController?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
     {
         LLNetworkManager.sharedInstance.setUp(withServer: SHWNetworkServer.tvMaze)
         
-        
-        self.vc = SHWSearchShowsViewController()
+        let vc = SHWSearchShowsViewController()
+
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.navigationBar.isTranslucent = false
         
         window = UIWindow(frame: UIScreen.main.bounds)
-         
-        window?.rootViewController = vc
-        
+        window?.rootViewController = navigationController        
         window?.makeKeyAndVisible()
         
         return true

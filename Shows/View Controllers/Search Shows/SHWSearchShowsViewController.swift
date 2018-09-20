@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 private let kSHWSearchShowsViewControllerCellIdentifier = "kSHWSearchShowsViewControllerCellIdentifier"
 
@@ -18,6 +19,12 @@ class SHWSearchShowsViewController : UIViewController
     
     @IBOutlet weak var searchBar    : UISearchBar!
     @IBOutlet weak var tableView    : UITableView!
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        self.title = "Search"
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -37,7 +44,7 @@ extension SHWSearchShowsViewController : UITableViewDataSource
         
         if cell == nil
         {
-            cell = UITableViewCell(style: .subtitle,
+            cell = UITableViewCell(style:.subtitle,
                                    reuseIdentifier: kSHWSearchShowsViewControllerCellIdentifier)
         }
         
@@ -45,9 +52,27 @@ extension SHWSearchShowsViewController : UITableViewDataSource
         {
             cell?.textLabel?.text       = result.show.name
             cell?.detailTextLabel?.text = result.show.summary
+            
+            if let image = result.show.image,
+                let url = URL(string: image.medium)
+            {
+                cell?.imageView?.af_setImage(withURL: url, completion: { (response) in
+                    
+                    if response.response != nil
+                    {
+                        tableView.beginUpdates()
+                        tableView.endUpdates()
+                    }
+                })
+            }
         }
         
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 100.0
     }
 }
 
@@ -62,7 +87,9 @@ extension SHWSearchShowsViewController : UITableViewDelegate
         
         guard let result = self.showResults?[indexPath.row] else { return }
         
-        print("Selected \(result.show.name)")
+        let scheduleVC = SHWEpisodesViewController(withShow: result.show)
+        
+        self.navigationController?.pushViewController(scheduleVC, animated: true)
     }
 }
 
@@ -96,6 +123,15 @@ extension SHWSearchShowsViewController : UISearchBarDelegate
                     }
                     break
             }
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
+    {
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true
+        {
+            self.showResults?.removeAll()
+            self.tableView.reloadData()
         }
     }
 }
