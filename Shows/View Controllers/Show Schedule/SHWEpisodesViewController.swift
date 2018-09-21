@@ -10,8 +10,8 @@ import UIKit
 
 class SHWEpisodesViewController : UIViewController
 {
-    private let show : SHWShow
-    private var episodes : [SHWEpisode] = []
+    private let show        : SHWShow
+    private var episodes    : [SHWEpisode] = []
 
     //MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!

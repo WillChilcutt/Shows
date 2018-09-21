@@ -24,7 +24,7 @@ enum LLNetworkManagerNoResultResponse
     case failure(withError : Error)
 }
 
-enum LLNetworkManagerResultResponse<ResultType : Codable>
+enum LLNetworkManagerResultResponse<ResultType>
 {
     case success(withResult : ResultType)
     case failure(withError : Error)
@@ -37,7 +37,7 @@ enum LLNetworkManagerError : Error
 }
 
 typealias kLLNetworkManagerNoResultResponseBlock            = (LLNetworkManagerNoResultResponse) -> Void
-typealias kLLNetworkManagerResultResponseBlock<ResultType : Codable>  = (LLNetworkManagerResultResponse<ResultType>) -> Void
+typealias kLLNetworkManagerResultResponseBlock<ResultType>  = (LLNetworkManagerResultResponse<ResultType>) -> Void
 
 class LLNetworkManager: NSObject
 {

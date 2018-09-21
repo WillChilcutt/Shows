@@ -76,6 +76,10 @@ extension SHWSearchShowsViewController : UITableViewDataSource
                     }
                 })
             }
+            else
+            {
+                cell?.imageView?.image = nil
+            }
         }
         
         return cell!

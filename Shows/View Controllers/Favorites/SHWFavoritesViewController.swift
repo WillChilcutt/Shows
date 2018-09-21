@@ -10,6 +10,8 @@ import UIKit
 
 private let kSHWFavoritesViewControllerCellIdentifier = "kSHWFavoritesViewControllerCellIdentifier"
 
+let kSHWFavoritesViewControllerTitle = "Favorites"
+
 class SHWFavoritesViewController: UIViewController
 {
     private var favoriteShowsArray : [SHWShow] = []
@@ -19,7 +21,7 @@ class SHWFavoritesViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.title = "Favorites"
+        self.title = kSHWFavoritesViewControllerTitle
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                                  target: self,
@@ -86,6 +88,10 @@ extension SHWFavoritesViewController : UITableViewDataSource
                     tableView.endUpdates()
                 }
             })
+        }
+        else
+        {
+            cell?.imageView?.image = nil
         }
         
         return cell!

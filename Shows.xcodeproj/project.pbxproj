@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		4B8461D3BE8DE3BA9C8D39FA /* Pods_ShowsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 429A43C54871FB9407B94DF1 /* Pods_ShowsTests.framework */; };
 		57051F590B20FF39816D9BE0 /* Pods_Shows.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12B6F05C0544371EA7944424 /* Pods_Shows.framework */; };
+		BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */; };
+		BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */; };
+		BE231AC42154ABD600F8A5E4 /* SHWDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */; };
+		BE690BF32154992100846F8C /* SHWFavoritesScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE690BF12154992100846F8C /* SHWFavoritesScheduleViewController.swift */; };
+		BE690BF42154992100846F8C /* SHWFavoritesScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE690BF22154992100846F8C /* SHWFavoritesScheduleViewController.xib */; };
+		BE690BF721549F2800846F8C /* SHWGetShowsScheduleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE690BF621549F2800846F8C /* SHWGetShowsScheduleRequest.swift */; };
 		BEAD81A12153358300085B33 /* SHWEpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD819F2153358300085B33 /* SHWEpisodesViewController.swift */; };
 		BEAD81A22153358300085B33 /* SHWEpisodesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD81A02153358300085B33 /* SHWEpisodesViewController.xib */; };
 		BEAD81A42153384B00085B33 /* SHWEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD81A32153384B00085B33 /* SHWEpisode.swift */; };
@@ -42,6 +48,12 @@
 		373B46D09F770F8C9FC7967B /* Pods-Shows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shows.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shows/Pods-Shows.debug.xcconfig"; sourceTree = "<group>"; };
 		429A43C54871FB9407B94DF1 /* Pods_ShowsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShowsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E15B224ED5C7AD834698FE4 /* Pods-ShowsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShowsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShowsTests/Pods-ShowsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWScheduleDay.swift; sourceTree = "<group>"; };
+		BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateFormatterExtensions.swift; sourceTree = "<group>"; };
+		BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateExtensions.swift; sourceTree = "<group>"; };
+		BE690BF12154992100846F8C /* SHWFavoritesScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWFavoritesScheduleViewController.swift; sourceTree = "<group>"; };
+		BE690BF22154992100846F8C /* SHWFavoritesScheduleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWFavoritesScheduleViewController.xib; sourceTree = "<group>"; };
+		BE690BF621549F2800846F8C /* SHWGetShowsScheduleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWGetShowsScheduleRequest.swift; sourceTree = "<group>"; };
 		BEAD819F2153358300085B33 /* SHWEpisodesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWEpisodesViewController.swift; sourceTree = "<group>"; };
 		BEAD81A02153358300085B33 /* SHWEpisodesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWEpisodesViewController.xib; sourceTree = "<group>"; };
 		BEAD81A32153384B00085B33 /* SHWEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWEpisode.swift; sourceTree = "<group>"; };
@@ -106,6 +118,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE231AC02154AACF00F8A5E4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */,
+				BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BE690BF02154991000846F8C /* Favorites Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				BE690BF12154992100846F8C /* SHWFavoritesScheduleViewController.swift */,
+				BE690BF22154992100846F8C /* SHWFavoritesScheduleViewController.xib */,
+			);
+			path = "Favorites Schedule";
+			sourceTree = "<group>";
+		};
+		BE690BF521549F0B00846F8C /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				BE690BF621549F2800846F8C /* SHWGetShowsScheduleRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		BEAD819D2153356400085B33 /* Search Shows */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +194,7 @@
 		BEBD95472151E32500F7CBE1 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
+				BE231AC02154AACF00F8A5E4 /* Extensions */,
 				BEBD956B2151E36400F7CBE1 /* AppDelegate */,
 				BEBD956E2151E3A800F7CBE1 /* DataManager */,
 				BEBD956F2151E3AF00F7CBE1 /* NetworkManager */,
@@ -186,6 +225,7 @@
 		BEBD956C2151E36B00F7CBE1 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BE690BF02154991000846F8C /* Favorites Schedule */,
 				BEAD81A921534CBD00085B33 /* Favorites */,
 				BEAD819E2153356D00085B33 /* Show Schedule */,
 				BEAD819D2153356400085B33 /* Search Shows */,
@@ -214,6 +254,7 @@
 		BEBD956F2151E3AF00F7CBE1 /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
+				BE690BF521549F0B00846F8C /* Requests */,
 				BEBD95702151E3C800F7CBE1 /* LLNetworkManager.swift */,
 				BEBD95722151E46700F7CBE1 /* SHWNetworking.swift */,
 			);
@@ -223,9 +264,10 @@
 		BEBD95742151E99500F7CBE1 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				BEBD95752151E9AC00F7CBE1 /* SHWShow.swift */,
 				BEAD81A32153384B00085B33 /* SHWEpisode.swift */,
 				BEAD81A52153389300085B33 /* SHWImage.swift */,
+				BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */,
+				BEBD95752151E9AC00F7CBE1 /* SHWShow.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -314,6 +356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE690BF42154992100846F8C /* SHWFavoritesScheduleViewController.xib in Resources */,
 				BEBD95562151E32700F7CBE1 /* LaunchScreen.storyboard in Resources */,
 				BEBD957A2151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib in Resources */,
 				BEAD81AD21534CCF00085B33 /* SHWFavoritesViewController.xib in Resources */,
@@ -397,7 +440,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */,
 				BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */,
+				BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */,
 				BEAD81A82153477D00085B33 /* SHWDataManager.swift in Sources */,
 				BEAD81A12153358300085B33 /* SHWEpisodesViewController.swift in Sources */,
 				BEBD95792151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift in Sources */,
@@ -405,7 +450,10 @@
 				BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */,
 				BEAD81AC21534CCE00085B33 /* SHWFavoritesViewController.swift in Sources */,
 				BEAD81A42153384B00085B33 /* SHWEpisode.swift in Sources */,
+				BE690BF32154992100846F8C /* SHWFavoritesScheduleViewController.swift in Sources */,
 				BEBD95762151E9AC00F7CBE1 /* SHWShow.swift in Sources */,
+				BE690BF721549F2800846F8C /* SHWGetShowsScheduleRequest.swift in Sources */,
+				BE231AC42154ABD600F8A5E4 /* SHWDateExtensions.swift in Sources */,
 				BEAD81A62153389300085B33 /* SHWImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

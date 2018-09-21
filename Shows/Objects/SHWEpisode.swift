@@ -8,24 +8,6 @@
 
 import Foundation
 
-extension DateFormatter
-{
-    static let iso8601 : DateFormatter =
-    {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
-        return formatter
-    }()
-    
-    static let prettyPrint : DateFormatter =
-    {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, y"
-        
-        return formatter
-    }()
-}
-
 struct SHWEpisode : Codable
 {
     let id          : Int
@@ -40,6 +22,8 @@ struct SHWEpisode : Codable
     let airtime     : String
     let airstamp    : String?
     
+    var show        : SHWShow?
+    
     var originalDate : Date?
     {   get
         {
@@ -47,6 +31,14 @@ struct SHWEpisode : Codable
             
             return DateFormatter.iso8601.date(from: airstamp)
         }
+    }
+}
+
+extension SHWEpisode : Equatable
+{
+    static func == (lhs: SHWEpisode, rhs: SHWEpisode) -> Bool
+    {
+        return lhs.id == rhs.id && lhs.season == rhs.season && lhs.number == rhs.number && lhs.name == rhs.name
     }
 }
 
@@ -70,5 +62,49 @@ extension Array where Element == SHWEpisode
         }
         
         return catelog
+    }
+    
+    func groupByDate() -> [SHWScheduleDay]
+    {
+        var dateDict :  [Date : [SHWEpisode]] = [:]
+        
+        for episode in self
+        {
+            if let date = episode.originalDate?.startOfDay
+            {
+                if var episodes = dateDict[date]
+                {
+                    episodes.append(episode)
+                    dateDict[date] = episodes
+                }
+                else
+                {
+                    dateDict[date] = [episode]
+                }
+            }
+        }
+        
+        if dateDict.keys.contains(Date().startOfDay) == false
+        {
+            dateDict[Date().startOfDay] = []
+        }
+        
+        var scheduleDayArray : [SHWScheduleDay] = []
+        
+        for key in dateDict.keys
+        {
+            guard let episodes = dateDict[key] else { continue }
+            
+            let day = SHWScheduleDay(date: key, episodes: episodes)
+            
+            scheduleDayArray.append(day)
+        }
+        
+        scheduleDayArray.sort
+        { (lhs, rhs) -> Bool in
+            return lhs.date < rhs.date
+        }
+        
+        return scheduleDayArray
     }
 }

@@ -9,6 +9,14 @@
 import UIKit
 import CoreData
 
+private struct SHWTabBarRep
+{
+    let title               : String
+    let viewController      : UIViewController
+    let tabBarImage         : UIImage
+    let selectedTabBarImage : UIImage
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
@@ -18,13 +26,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         LLNetworkManager.sharedInstance.setUp(withServer: SHWNetworkServer.tvMaze)
         
-        let vc = SHWFavoritesViewController()
-
-        let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.navigationBar.isTranslucent = false
+        let tabBarController = UITabBarController()
+        
+        let scheduleTabBarRep = SHWTabBarRep(title: kSHWFavoritesScheduleViewControllerTitle, viewController: SHWFavoritesScheduleViewController(), tabBarImage: #imageLiteral(resourceName: "schedule"), selectedTabBarImage: #imageLiteral(resourceName: "schedule"))
+        let favoritesTabBarRep = SHWTabBarRep(title: kSHWFavoritesViewControllerTitle, viewController: SHWFavoritesViewController(), tabBarImage: #imageLiteral(resourceName: "Favorite"), selectedTabBarImage: #imageLiteral(resourceName: "Favorited"))
+        
+        for rep in [scheduleTabBarRep,favoritesTabBarRep]
+        {
+            let navigationController = UINavigationController(rootViewController: rep.viewController)
+            navigationController.navigationBar.isTranslucent = false
+            rep.viewController.tabBarItem = UITabBarItem(title: rep.title, image: rep.tabBarImage, selectedImage: rep.selectedTabBarImage)
+            
+            tabBarController.addChildViewController(navigationController)
+        }
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navigationController        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
         return true
