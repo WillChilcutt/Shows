@@ -11,7 +11,7 @@ import AlamofireImage
 
 let kSHWFavoritesScheduleViewControllerTitle = "Schedule"
 
-private let kSHWFavoritesScheduleViewControllerCellIdentifier = "kSHWFavoritesScheduleViewControllerCellIdentifier"
+private let kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier = "kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier"
 
 class SHWFavoritesScheduleViewController : UIViewController
 {
@@ -26,6 +26,12 @@ class SHWFavoritesScheduleViewController : UIViewController
         super.viewDidLoad()
         
         self.title = kSHWFavoritesScheduleViewControllerTitle
+        
+        
+        self.tableView.register(UINib(nibName: kSHWShowEpisodeTableViewCellClassName, bundle: nil),
+                                forCellReuseIdentifier: kSHWShowEpisodeTableViewCellClassName)
+        self.tableView.register(UITableViewCell.self,
+                                forCellReuseIdentifier: kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier)
         
         self.loadSchedule()
         
@@ -46,7 +52,9 @@ class SHWFavoritesScheduleViewController : UIViewController
         let day = SHWScheduleDay(date: Date().startOfDay, episodes: [])
         guard let todaysDateIndex = self.daysArray.index(of: day) else { return }
         
-        self.tableView.scrollToRow(at: IndexPath(row: 0, section: todaysDateIndex), at: .top, animated: animated)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: todaysDateIndex),
+                                   at: .top,
+                                   animated: animated)
     }
     
     private func loadSchedule()
@@ -101,58 +109,36 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        var cell = tableView.dequeueReusableCell(withIdentifier: kSHWFavoritesScheduleViewControllerCellIdentifier)
+        let noShowsToday = self.daysArray[indexPath.section].episodes.count == 0
         
-        if cell == nil
-        {
-            cell = UITableViewCell(style: .subtitle,
-                                   reuseIdentifier: kSHWFavoritesScheduleViewControllerCellIdentifier)
-        }
+        let cellIdentifer : String
         
-        if  self.daysArray[indexPath.section].episodes.count == 0
+        if noShowsToday == true
         {
-            cell?.textLabel?.text = "No shows today"
-            cell?.detailTextLabel?.text = ""
-            cell?.imageView?.image = nil
-            cell?.backgroundView?.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            cellIdentifer = kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier
         }
         else
         {
-            let episode = self.daysArray[indexPath.section].episodes[indexPath.row]
-            
-            cell?.textLabel?.text       = episode.name
-            
-            if let date = episode.originalDate
-            {
-                cell?.detailTextLabel?.text = DateFormatter.justTime.string(from: date)
-            }
-            
-            if  let image = episode.show?.image,
-                let url = URL(string: image.medium)
-            {
-                cell?.imageView?.af_setImage(withURL: url,
-                                             completion:
-                { (response) in
-                    
-                    DispatchQueue.main.async
-                    {
-                        if response.response != nil
-                        {
-                            tableView.beginUpdates()
-                            tableView.endUpdates()
-                        }
-                    }
-                })
-            }
-            else
-            {
-                cell?.imageView?.image = nil
-            }
-
-            cell?.backgroundView?.backgroundColor = .white
+            cellIdentifer = kSHWShowEpisodeTableViewCellClassName
         }
         
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifer,
+                                                 for: indexPath)
+        
+        if noShowsToday == true
+        {
+            cell.textLabel?.text                   = "No shows today"
+            cell.backgroundView?.backgroundColor   = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+        else if let cell = cell as? SHWShowEpisodeTableViewCell
+        {
+            let episode = self.daysArray[indexPath.section].episodes[indexPath.row]
+            
+            cell.setUp(withEpisode: episode,
+                       andTableRefresher: self)
+        }
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
@@ -170,5 +156,30 @@ extension SHWFavoritesScheduleViewController : UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        let noShowsToday = self.daysArray[indexPath.section].episodes.count == 0
+
+        if noShowsToday == true
+        {
+            return 44
+        }
+        else
+        {
+            return 100
+        }
+    }
+}
+
+//MARK: - SHWTableRefresher
+
+extension SHWFavoritesScheduleViewController : SHWTableRefresher
+{
+    func handleTableNeedsRefreshing()
+    {
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
 }

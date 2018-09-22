@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4B8461D3BE8DE3BA9C8D39FA /* Pods_ShowsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 429A43C54871FB9407B94DF1 /* Pods_ShowsTests.framework */; };
 		57051F590B20FF39816D9BE0 /* Pods_Shows.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12B6F05C0544371EA7944424 /* Pods_Shows.framework */; };
+		BE207BEC2156963400669930 /* SHWShowEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE207BEA2156963400669930 /* SHWShowEpisodeTableViewCell.swift */; };
+		BE207BED2156963400669930 /* SHWShowEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE207BEB2156963400669930 /* SHWShowEpisodeTableViewCell.xib */; };
+		BE207BEF2156998900669930 /* SHWTableRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE207BEE2156998900669930 /* SHWTableRefresher.swift */; };
 		BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */; };
 		BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */; };
 		BE231AC42154ABD600F8A5E4 /* SHWDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */; };
@@ -48,6 +51,9 @@
 		373B46D09F770F8C9FC7967B /* Pods-Shows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shows.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shows/Pods-Shows.debug.xcconfig"; sourceTree = "<group>"; };
 		429A43C54871FB9407B94DF1 /* Pods_ShowsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShowsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E15B224ED5C7AD834698FE4 /* Pods-ShowsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShowsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShowsTests/Pods-ShowsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE207BEA2156963400669930 /* SHWShowEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWShowEpisodeTableViewCell.swift; sourceTree = "<group>"; };
+		BE207BEB2156963400669930 /* SHWShowEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWShowEpisodeTableViewCell.xib; sourceTree = "<group>"; };
+		BE207BEE2156998900669930 /* SHWTableRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWTableRefresher.swift; sourceTree = "<group>"; };
 		BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWScheduleDay.swift; sourceTree = "<group>"; };
 		BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateFormatterExtensions.swift; sourceTree = "<group>"; };
 		BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateExtensions.swift; sourceTree = "<group>"; };
@@ -116,6 +122,24 @@
 				429A43C54871FB9407B94DF1 /* Pods_ShowsTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE207BE82156952000669930 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BE207BE92156952800669930 /* Table View Cells */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		BE207BE92156952800669930 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BE207BEA2156963400669930 /* SHWShowEpisodeTableViewCell.swift */,
+				BE207BEB2156963400669930 /* SHWShowEpisodeTableViewCell.xib */,
+				BE207BEE2156998900669930 /* SHWTableRefresher.swift */,
+			);
+			path = "Table View Cells";
 			sourceTree = "<group>";
 		};
 		BE231AC02154AACF00F8A5E4 /* Extensions */ = {
@@ -194,9 +218,10 @@
 		BEBD95472151E32500F7CBE1 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
-				BE231AC02154AACF00F8A5E4 /* Extensions */,
 				BEBD956B2151E36400F7CBE1 /* AppDelegate */,
+				BE207BE82156952000669930 /* Cells */,
 				BEBD956E2151E3A800F7CBE1 /* DataManager */,
+				BE231AC02154AACF00F8A5E4 /* Extensions */,
 				BEBD956F2151E3AF00F7CBE1 /* NetworkManager */,
 				BEBD95742151E99500F7CBE1 /* Objects */,
 				BEBD956D2151E37000F7CBE1 /* Support Files */,
@@ -361,6 +386,7 @@
 				BEBD957A2151ECFE00F7CBE1 /* SHWSearchShowsViewController.xib in Resources */,
 				BEAD81AD21534CCF00085B33 /* SHWFavoritesViewController.xib in Resources */,
 				BEBD95532151E32700F7CBE1 /* Assets.xcassets in Resources */,
+				BE207BED2156963400669930 /* SHWShowEpisodeTableViewCell.xib in Resources */,
 				BEAD81A22153358300085B33 /* SHWEpisodesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,11 +467,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */,
+				BE207BEC2156963400669930 /* SHWShowEpisodeTableViewCell.swift in Sources */,
 				BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */,
 				BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */,
 				BEAD81A82153477D00085B33 /* SHWDataManager.swift in Sources */,
 				BEAD81A12153358300085B33 /* SHWEpisodesViewController.swift in Sources */,
 				BEBD95792151ECFE00F7CBE1 /* SHWSearchShowsViewController.swift in Sources */,
+				BE207BEF2156998900669930 /* SHWTableRefresher.swift in Sources */,
 				BEBD95712151E3C800F7CBE1 /* LLNetworkManager.swift in Sources */,
 				BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */,
 				BEAD81AC21534CCE00085B33 /* SHWFavoritesViewController.swift in Sources */,
