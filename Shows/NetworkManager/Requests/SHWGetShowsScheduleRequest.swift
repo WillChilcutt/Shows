@@ -34,7 +34,6 @@ class SHWGetShowsScheduleRequest: NSObject
             LLNetworkManager.sharedInstance.performRequest(SHWNetworkRequest.getEpisodes(forShow: show),
                                                            withResultType: [SHWEpisode].self,
                                                            andCompletionBlock:
-                
             { (response) in
                 
                 defer

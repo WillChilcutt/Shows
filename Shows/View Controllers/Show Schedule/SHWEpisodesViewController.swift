@@ -34,7 +34,7 @@ class SHWEpisodesViewController : UIViewController
         
         self.title = self.show.name
         
-        if SHWDataManager.isShowFavorited(self.show) == true
+        if SHWDataManager().isShowFavorited(self.show) == true
         {
             self.setUnfavoriteButton()
         }
@@ -86,13 +86,13 @@ class SHWEpisodesViewController : UIViewController
     
     @objc private func favoriteShow()
     {
-        SHWDataManager.favoriteShow(self.show)
+        SHWDataManager().favoriteShow(self.show)
         self.setUnfavoriteButton()
     }
     
     @objc private func unfavoriteShow()
     {
-        SHWDataManager.unfavoriteShow(self.show)
+        SHWDataManager().unfavoriteShow(self.show)
         self.setFavoriteButton()
     }
 }

@@ -42,6 +42,14 @@ extension SHWEpisode : Equatable
     }
 }
 
+extension SHWEpisode : Hashable
+{
+    var hashValue: Int
+    {
+        return self.id
+    }
+}
+
 extension Array where Element == SHWEpisode
 {
     func episodeCatelog() -> [Int : [SHWEpisode]]

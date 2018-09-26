@@ -37,7 +37,7 @@ class SHWFavoritesViewController: UIViewController
     
     private func loadFavorites()
     {
-        self.favoriteShowsArray = SHWDataManager.getFavoritedShows().sorted { return $0.name.lowercased() < $1.name.lowercased() }
+        self.favoriteShowsArray = SHWDataManager().getFavoritedShows().sorted { return $0.name.lowercased() < $1.name.lowercased() }
         self.tableView.reloadData()
     }
     

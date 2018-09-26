@@ -40,6 +40,12 @@ class SHWFavoritesScheduleViewController : UIViewController
                                           target: self,
                                           action: #selector(self.scrollToTodayAnimated))
         self.navigationItem.leftBarButtonItem = todayButton
+        
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh,
+                                            target: self,
+                                            action: #selector(self.loadFreshSchedule))
+        
+        self.navigationItem.rightBarButtonItem = refreshButton
     }
     
     @objc private func scrollToTodayAnimated()
@@ -57,25 +63,29 @@ class SHWFavoritesScheduleViewController : UIViewController
                                    animated: animated)
     }
     
-    private func loadSchedule()
+    @objc private func loadFreshSchedule()
     {
-        let request = SHWGetShowsScheduleRequest(withShows: SHWDataManager.getFavoritedShows())
-        
-        request.performRequest
+        self.loadSchedule(fresh: true)
+    }
+    
+    private func loadSchedule(fresh : Bool? = false)
+    {
+        SHWDataManager().getEpisodes(forShows: SHWDataManager().getFavoritedShows(),
+                                     freshDataOnly: fresh)
         { (response) in
             switch response
             {
                 case .failure(_):
                     break
                 case .success(let result):
-                    
+
                     self.daysArray.removeAll()
                     self.daysArray.append(contentsOf: result.groupByDate())
-                    
+
                     DispatchQueue.main.async
                     {
                         self.tableView.reloadData()
-                        
+
                         self.scrollToToday(animated: false)
                     }
                     break

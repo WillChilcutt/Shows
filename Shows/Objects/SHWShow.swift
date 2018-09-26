@@ -44,6 +44,14 @@ extension SHWShow : Equatable
     }
 }
 
+extension SHWShow : Hashable
+{
+    var hashValue: Int
+    {
+        return self.id
+    }
+}
+
 enum SHWShowStatus : String, Codable
 {
     case ended          = "Ended"

@@ -15,6 +15,8 @@
 		BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */; };
 		BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */; };
 		BE231AC42154ABD600F8A5E4 /* SHWDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */; };
+		BE5F46D2215B324E007BA2F7 /* SHWErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5F46D1215B324E007BA2F7 /* SHWErrorExtensions.swift */; };
+		BE5F46D4215B3A03007BA2F7 /* SHWArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5F46D3215B3A03007BA2F7 /* SHWArrayExtensions.swift */; };
 		BE690BF32154992100846F8C /* SHWFavoritesScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE690BF12154992100846F8C /* SHWFavoritesScheduleViewController.swift */; };
 		BE690BF42154992100846F8C /* SHWFavoritesScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE690BF22154992100846F8C /* SHWFavoritesScheduleViewController.xib */; };
 		BE690BF721549F2800846F8C /* SHWGetShowsScheduleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE690BF621549F2800846F8C /* SHWGetShowsScheduleRequest.swift */; };
@@ -57,6 +59,8 @@
 		BE231ABE2154A85A00F8A5E4 /* SHWScheduleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWScheduleDay.swift; sourceTree = "<group>"; };
 		BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateFormatterExtensions.swift; sourceTree = "<group>"; };
 		BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWDateExtensions.swift; sourceTree = "<group>"; };
+		BE5F46D1215B324E007BA2F7 /* SHWErrorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWErrorExtensions.swift; sourceTree = "<group>"; };
+		BE5F46D3215B3A03007BA2F7 /* SHWArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWArrayExtensions.swift; sourceTree = "<group>"; };
 		BE690BF12154992100846F8C /* SHWFavoritesScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWFavoritesScheduleViewController.swift; sourceTree = "<group>"; };
 		BE690BF22154992100846F8C /* SHWFavoritesScheduleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SHWFavoritesScheduleViewController.xib; sourceTree = "<group>"; };
 		BE690BF621549F2800846F8C /* SHWGetShowsScheduleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHWGetShowsScheduleRequest.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 			children = (
 				BE231AC12154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift */,
 				BE231AC32154ABD600F8A5E4 /* SHWDateExtensions.swift */,
+				BE5F46D1215B324E007BA2F7 /* SHWErrorExtensions.swift */,
+				BE5F46D3215B3A03007BA2F7 /* SHWArrayExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -350,6 +356,11 @@
 				TargetAttributes = {
 					BEBD95442151E32500F7CBE1 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					BEBD955B2151E32700F7CBE1 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -469,6 +480,7 @@
 				BE231ABF2154A85A00F8A5E4 /* SHWScheduleDay.swift in Sources */,
 				BE207BEC2156963400669930 /* SHWShowEpisodeTableViewCell.swift in Sources */,
 				BEBD95492151E32500F7CBE1 /* AppDelegate.swift in Sources */,
+				BE5F46D2215B324E007BA2F7 /* SHWErrorExtensions.swift in Sources */,
 				BE231AC22154AADC00F8A5E4 /* SHWDateFormatterExtensions.swift in Sources */,
 				BEAD81A82153477D00085B33 /* SHWDataManager.swift in Sources */,
 				BEAD81A12153358300085B33 /* SHWEpisodesViewController.swift in Sources */,
@@ -478,6 +490,7 @@
 				BEBD95732151E46700F7CBE1 /* SHWNetworking.swift in Sources */,
 				BEAD81AC21534CCE00085B33 /* SHWFavoritesViewController.swift in Sources */,
 				BEAD81A42153384B00085B33 /* SHWEpisode.swift in Sources */,
+				BE5F46D4215B3A03007BA2F7 /* SHWArrayExtensions.swift in Sources */,
 				BE690BF32154992100846F8C /* SHWFavoritesScheduleViewController.swift in Sources */,
 				BEBD95762151E9AC00F7CBE1 /* SHWShow.swift in Sources */,
 				BE690BF721549F2800846F8C /* SHWGetShowsScheduleRequest.swift in Sources */,
