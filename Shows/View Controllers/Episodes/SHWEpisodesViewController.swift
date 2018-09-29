@@ -8,21 +8,23 @@
 
 import UIKit
 
-private let kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle = "Mark Episodes as Watched"
-private let kSHWEpisodesViewControllerDoneBarButtonItemTitle = "Done"
+private let kSHWEpisodesViewControllerDoneBarButtonItemTitle                        = "Done"
+private let kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle       = "Mark Episodes as Watched"
+private let kSHWEpisodesViewControllerMarkAllEpisodesAsWatchedBarButtonItemTitle    = "Watched All Episodes"
 
 
 class SHWEpisodesViewController : UIViewController
 {
-    private let show                    : SHWShow
-    private var episodes                : [SHWEpisode] = []
-    private var watchedEpisodesArray    : [SHWEpisode] = []
-    private var inMarkAsWatchedMode     : Bool = false
+    private let show                            : SHWShow
+    private var episodes                        : [SHWEpisode] = []
+    private var watchedEpisodesArray            : [SHWEpisode] = []
+    private var inMarkAsWatchedMode             : Bool = false
+    private var markAllAsWatchedBarButtonItem   : UIBarButtonItem?
     
     //MARK: - IBOutlet
-    @IBOutlet weak var tableView                    : UITableView!
-    @IBOutlet weak var bottomToolBar                : UIToolbar!
-    @IBOutlet weak var markEpisodesAsWatchedBarButtonItem : UIBarButtonItem!
+    @IBOutlet weak var tableView                            : UITableView!
+    @IBOutlet weak var bottomToolBar                        : UIToolbar!
+    @IBOutlet weak var markEpisodesAsWatchedBarButtonItem   : UIBarButtonItem!
     
     init(withShow show : SHWShow)
     {
@@ -132,6 +134,31 @@ class SHWEpisodesViewController : UIViewController
         }
     }
     
+    @objc private func handleUserWantsToMarkAllAsWatched()
+    {
+        do
+        {
+            let dataManager = SHWDataManager()
+            
+            if self.watchedEpisodesArray == self.episodes
+            {
+                try dataManager.handleUserHasNotWatched(episodes: self.episodes, forShow: self.show)
+            }
+            else
+            {
+                try dataManager.handleUserHasWatched(episodes: self.episodes, forShow: self.show)
+            }
+            
+            self.watchedEpisodesArray = try dataManager.getWatchedEpisodes(forShow: self.show)
+            
+            self.tableView.reloadData()
+        }
+        catch
+        {
+            print("Error handleUserWantsToMarkAllAsWatched = \(error)")
+        }
+    }
+    
     //MARK: - IBAction
     
     @IBAction func handleMarkEpisodesAsWatchedButtonPressed(_ sender: Any)
@@ -143,12 +170,23 @@ class SHWEpisodesViewController : UIViewController
             self.markEpisodesAsWatchedBarButtonItem.title = kSHWEpisodesViewControllerDoneBarButtonItemTitle
             
             self.inMarkAsWatchedMode = true
+            
+            self.markAllAsWatchedBarButtonItem = UIBarButtonItem(title: kSHWEpisodesViewControllerMarkAllEpisodesAsWatchedBarButtonItemTitle,
+                                                                 style: .done,
+                                                                 target: self,
+                                                                 action: #selector(self.handleUserWantsToMarkAllAsWatched))
+            
+            let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let items : [UIBarButtonItem] = [self.markEpisodesAsWatchedBarButtonItem, flexibleSpaceBarButtonItem, self.markAllAsWatchedBarButtonItem!]
+            self.bottomToolBar.setItems(items, animated: true)
         }
         else
         {
             self.markEpisodesAsWatchedBarButtonItem.title = kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle
             
             self.inMarkAsWatchedMode = false
+            
+            self.bottomToolBar.setItems([self.markEpisodesAsWatchedBarButtonItem], animated: true)
         }
     }
 }
