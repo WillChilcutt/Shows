@@ -38,7 +38,7 @@ extension SHWEpisode : Equatable
 {
     static func == (lhs: SHWEpisode, rhs: SHWEpisode) -> Bool
     {
-        return lhs.id == rhs.id && lhs.season == rhs.season && lhs.number == rhs.number && lhs.name == rhs.name
+        return lhs.show?.id == rhs.show?.id && lhs.id == rhs.id && lhs.season == rhs.season && lhs.number == rhs.number && lhs.name == rhs.name
     }
 }
 

@@ -209,7 +209,16 @@ extension SHWDataManager
                                                   as: [SHWEpisode].self,
                                                   decoder: JSONDecoder())
             
-            return episodesArray
+            var resultsWithShow : [SHWEpisode] = []
+            
+            for var episode in episodesArray
+            {
+                episode.show = show
+                
+                resultsWithShow.append(episode)
+            }
+            
+            return resultsWithShow
         }
         catch let error
         {

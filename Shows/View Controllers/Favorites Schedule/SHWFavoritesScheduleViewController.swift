@@ -15,8 +15,9 @@ private let kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier = "kSH
 
 class SHWFavoritesScheduleViewController : UIViewController
 {
-    private var daysArray : [SHWScheduleDay] = []
-    private var watchedEpisodesDictionary : [SHWShow:[SHWEpisode]] = [:]
+    private var allDaysArray                : [SHWScheduleDay] = []
+    private var filteredDaysArray           : [SHWScheduleDay] = []
+    private var watchedEpisodesDictionary   : [SHWShow:[SHWEpisode]] = [:]
     
     //MARK: - IBOutlet
 
@@ -81,7 +82,7 @@ class SHWFavoritesScheduleViewController : UIViewController
     private func scrollToToday(animated : Bool)
     {
         let day = SHWScheduleDay(date: Date().startOfDay, episodes: [])
-        guard let todaysDateIndex = self.daysArray.index(of: day) else { return }
+        guard let todaysDateIndex = self.filteredDaysArray.index(of: day) else { return }
         
         self.tableView.scrollToRow(at: IndexPath(row: 0, section: todaysDateIndex),
                                    at: .top,
@@ -106,9 +107,13 @@ class SHWFavoritesScheduleViewController : UIViewController
                     break
                 case .success(let result):
 
-                    self.daysArray.removeAll()
-                    self.daysArray.append(contentsOf: result.groupByDate())
-                
+                    self.allDaysArray.removeAll()
+                    self.allDaysArray.append(contentsOf: result.groupByDate())
+                    self.filteredDaysArray.removeAll()
+                    self.filteredDaysArray.append(contentsOf: self.allDaysArray)
+                    
+                    self.filteredDaysArray.filteredBy(watchedEpisodes: self.watchedEpisodesDictionary)
+                    
                     DispatchQueue.main.async
                     {
                         self.tableView.reloadData()
@@ -127,12 +132,12 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
 {
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        return self.daysArray.count
+        return self.filteredDaysArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        let episodeCountForDay = self.daysArray[section].episodes.count
+        let episodeCountForDay = self.filteredDaysArray[section].episodes.count
         
         if episodeCountForDay == 0
         {
@@ -146,7 +151,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let noShowsToday = self.daysArray[indexPath.section].episodes.count == 0
+        let noShowsToday = self.filteredDaysArray[indexPath.section].episodes.count == 0
         
         let cellIdentifer : String
         
@@ -169,7 +174,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
         }
         else if let cell = cell as? SHWShowEpisodeTableViewCell
         {
-            let episode = self.daysArray[indexPath.section].episodes[indexPath.row]
+            let episode = self.filteredDaysArray[indexPath.section].episodes[indexPath.row]
             
             var episodeWatched : Bool = false
             
@@ -191,7 +196,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        let formattedString = DateFormatter.prettyPrint.string(from: self.daysArray[section].date)
+        let formattedString = DateFormatter.prettyPrint.string(from: self.filteredDaysArray[section].date)
         
         return formattedString
     }
@@ -205,7 +210,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDelegate
     {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let show = self.daysArray[indexPath.section].episodes[indexPath.row].show else { return }
+        guard let show = self.filteredDaysArray[indexPath.section].episodes[indexPath.row].show else { return }
         
         let vc = SHWEpisodesViewController(withShow: show)
         
@@ -215,7 +220,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let noShowsToday = self.daysArray[indexPath.section].episodes.count == 0
+        let noShowsToday = self.filteredDaysArray[indexPath.section].episodes.count == 0
 
         if noShowsToday == true
         {
