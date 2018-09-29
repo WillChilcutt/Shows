@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHWEpisodesViewController" customModule="Shows" customModuleProvider="target">
             <connections>
+                <outlet property="bottomToolBar" destination="iiY-wd-b0F" id="luA-xg-BqJ"/>
+                <outlet property="markEpisodesAsWatchedBarButtonItem" destination="hhR-xi-69M" id="39Z-jr-o8g"/>
                 <outlet property="tableView" destination="NhT-ZW-K45" id="Y3h-ii-tFO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,17 +24,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NhT-ZW-K45">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="okL-H7-ObF"/>
                         <outlet property="delegate" destination="-1" id="Qd1-Gq-8rJ"/>
                     </connections>
                 </tableView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiY-wd-b0F">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="J6Y-Va-bMf"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem title="Mark Episodes as Watched" style="done" id="hhR-xi-69M">
+                            <connections>
+                                <action selector="handleMarkEpisodesAsWatchedButtonPressed:" destination="-1" id="juY-P1-xCa"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NhT-ZW-K45" secondAttribute="bottom" id="0j4-e7-mXg"/>
+                <constraint firstItem="iiY-wd-b0F" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="5ea-gS-2uy"/>
+                <constraint firstItem="iiY-wd-b0F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="GFR-Xq-OEC"/>
+                <constraint firstItem="iiY-wd-b0F" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ix8-K0-DDX"/>
+                <constraint firstItem="iiY-wd-b0F" firstAttribute="top" secondItem="NhT-ZW-K45" secondAttribute="bottom" id="JqX-T2-LwG"/>
                 <constraint firstItem="NhT-ZW-K45" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="K1w-lc-aph"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NhT-ZW-K45" secondAttribute="trailing" id="QZG-eQ-53N"/>
                 <constraint firstItem="NhT-ZW-K45" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="v02-7c-NxX"/>

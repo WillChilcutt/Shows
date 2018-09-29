@@ -44,10 +44,18 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4VN-mC-vbv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="C97-YN-fnX"/>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="4VN-mC-vbv" secondAttribute="trailing" id="78b-LS-fXh"/>
                     <constraint firstItem="9Dh-2f-N0z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="A4V-sL-Faw"/>
+                    <constraint firstAttribute="bottom" secondItem="4VN-mC-vbv" secondAttribute="bottom" id="ABy-4h-ItF"/>
                     <constraint firstItem="5lN-Q4-nmM" firstAttribute="trailing" secondItem="HCW-Vj-BEC" secondAttribute="trailing" id="AaL-PF-dTX"/>
+                    <constraint firstItem="4VN-mC-vbv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Aur-rm-S0y"/>
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="leading" secondItem="HCW-Vj-BEC" secondAttribute="leading" id="JO0-JU-w5q"/>
                     <constraint firstAttribute="bottom" secondItem="9Dh-2f-N0z" secondAttribute="bottom" constant="4" id="RGd-Oq-KBT"/>
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="top" secondItem="HCW-Vj-BEC" secondAttribute="bottom" constant="8" id="T1w-di-BLy"/>
@@ -59,6 +67,7 @@
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="trailing" secondItem="HCW-Vj-BEC" secondAttribute="trailing" id="gPZ-Ex-PG4"/>
                     <constraint firstItem="HCW-Vj-BEC" firstAttribute="top" secondItem="9Dh-2f-N0z" secondAttribute="top" id="lG3-8I-LAk"/>
                     <constraint firstItem="5lN-Q4-nmM" firstAttribute="bottom" secondItem="9Dh-2f-N0z" secondAttribute="bottom" id="mQ4-t6-BoK"/>
+                    <constraint firstItem="4VN-mC-vbv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tN2-Yj-QWq"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -67,6 +76,7 @@
                 <outlet property="showImageView" destination="9Dh-2f-N0z" id="UhL-sr-AuA"/>
                 <outlet property="showNameLabel" destination="HCW-Vj-BEC" id="Xq7-np-MJd"/>
                 <outlet property="timeLabel" destination="5lN-Q4-nmM" id="qbg-bQ-i8K"/>
+                <outlet property="watchedEpisodeCoverView" destination="4VN-mC-vbv" id="RC5-oc-flo"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -20,7 +20,7 @@ extension DateFormatter
     static let prettyPrint : DateFormatter =
     {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, y"
+        formatter.dateFormat = "EEEE, MMMM d, y"
         
         return formatter
     }()

@@ -183,13 +183,13 @@
 			path = "Search Shows";
 			sourceTree = "<group>";
 		};
-		BEAD819E2153356D00085B33 /* Show Schedule */ = {
+		BEAD819E2153356D00085B33 /* Episodes */ = {
 			isa = PBXGroup;
 			children = (
 				BEAD819F2153358300085B33 /* SHWEpisodesViewController.swift */,
 				BEAD81A02153358300085B33 /* SHWEpisodesViewController.xib */,
 			);
-			path = "Show Schedule";
+			path = Episodes;
 			sourceTree = "<group>";
 		};
 		BEAD81A921534CBD00085B33 /* Favorites */ = {
@@ -258,7 +258,7 @@
 			children = (
 				BE690BF02154991000846F8C /* Favorites Schedule */,
 				BEAD81A921534CBD00085B33 /* Favorites */,
-				BEAD819E2153356D00085B33 /* Show Schedule */,
+				BEAD819E2153356D00085B33 /* Episodes */,
 				BEAD819D2153356400085B33 /* Search Shows */,
 			);
 			path = "View Controllers";

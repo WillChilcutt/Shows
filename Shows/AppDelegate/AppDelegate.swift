@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
         let dataManager = SHWDataManager()
-        let favoriteShows = dataManager.getFavoritedShows()
+        guard let favoriteShows = try? dataManager.getFavoritedShows() else { print("Failed to get favorite shows "); completionHandler(.failed); return }
         
         dataManager.getEpisodes(forShows: favoriteShows,
                                 withCompletionBlock:

@@ -17,6 +17,7 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
     @IBOutlet weak var showImageView    : UIImageView!
     @IBOutlet weak var showNameLabel    : UILabel!
     @IBOutlet weak var episodeNameLabel : UILabel!
+    @IBOutlet weak var watchedEpisodeCoverView: UIView!
     
     override func awakeFromNib()
     {
@@ -27,10 +28,11 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
         self.episodeNameLabel.text  = ""
     }
 
-    func setUp(withEpisode episode : SHWEpisode, andTableRefresher tableRefresh : SHWTableRefresher)
+    func setUp(withEpisode episode : SHWEpisode, watched : Bool, andTableRefresher tableRefresh : SHWTableRefresher)
     {
-        self.showNameLabel.text     = episode.show?.name
-        self.episodeNameLabel.text  = episode.name
+        self.showNameLabel.text                 = episode.show?.name
+        self.episodeNameLabel.text              = episode.name
+        self.watchedEpisodeCoverView.isHidden   = !watched
         
         if let date = episode.originalDate
         {
@@ -40,7 +42,6 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
         if  let image = episode.show?.image,
             let url = URL(string: image.medium)
         {
-            print("Getting image with url: \(url)")
             self.showImageView.af_setImage(withURL: url,
                                          completion:
             { (response) in

@@ -16,10 +16,14 @@ private func kSHWDataManagerEpisodeStorageLocation(forShow show : SHWShow) -> St
     return "\(show.id)-episodes.json"
 }
 
+private func kSHWDataManagerWatchedEpisodeStorageLocation(forShow show : SHWShow) -> String
+{
+    return "\(show.id)-watched-episodes.json"
+}
+
 class SHWDataManager: NSObject
 {
     private let dispatchGroup : DispatchGroup = DispatchGroup()
-
 }
 
 //Episodes
@@ -150,16 +154,62 @@ extension SHWDataManager
 
 extension SHWDataManager
 {
-    func getFavoritedShows() -> [SHWShow]
+    func getFavoritedShows() throws -> [SHWShow]
     {
+        let shows = try Disk.retrieve(kSHWDataManagerFavoritesStorageLocation,
+                                      from: .documents,
+                                      as: [SHWShow].self,
+                                      decoder: JSONDecoder())
+        
+        return shows
+    }
+    
+    func favoriteShow(_ show : SHWShow) throws
+    {
+        var favoriteShows = try self.getFavoritedShows()
+        
+        favoriteShows.append(show)
+       
+        try Disk.save(favoriteShows,
+                      to: .documents,
+                      as: kSHWDataManagerFavoritesStorageLocation)
+    }
+    
+    func unfavoriteShow(_ show : SHWShow) throws
+    {
+        var favoriteShows = try self.getFavoritedShows()
+        
+        guard let index = favoriteShows.index(of: show) else { return } //If didn't find show, don't continue
+
+        favoriteShows.remove(at: index)
+        
+        try Disk.save(favoriteShows,
+                      to: .documents,
+                      as: kSHWDataManagerFavoritesStorageLocation)
+    }
+    
+    func isShowFavorited(_ show : SHWShow) throws -> Bool
+    {
+        return try self.getFavoritedShows().contains(show)
+    }
+}
+
+//Watched
+
+extension SHWDataManager
+{
+    func getWatchedEpisodes(forShow show : SHWShow) throws -> [SHWEpisode]
+    {
+        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
+        
         do
         {
-            let shows = try Disk.retrieve(kSHWDataManagerFavoritesStorageLocation,
-                                          from: .documents,
-                                          as: [SHWShow].self,
-                                          decoder: JSONDecoder())
+            let episodesArray = try Disk.retrieve(location,
+                                                  from: .documents,
+                                                  as: [SHWEpisode].self,
+                                                  decoder: JSONDecoder())
             
-            return shows
+            return episodesArray
         }
         catch let error
         {
@@ -169,46 +219,34 @@ extension SHWDataManager
         }
     }
     
-    func favoriteShow(_ show : SHWShow)
+    func handleUserHasWatched(episodes episodesArray : [SHWEpisode], forShow show : SHWShow) throws
     {
-        var favoriteShows = self.getFavoritedShows()
+        var watchedEpisodes = try self.getWatchedEpisodes(forShow: show)
         
-        favoriteShows.append(show)
+        watchedEpisodes.append(contentsOf: episodesArray)
         
-        do
-        {
-            try Disk.save(favoriteShows,
-                          to: .documents,
-                          as: kSHWDataManagerFavoritesStorageLocation)
-        }
-        catch let error
-        {
-            print("Failed to favorite show: \(error)")
-        }
+        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
+        
+        try Disk.save(watchedEpisodes,
+                      to: .documents,
+                      as: location)
     }
     
-    func unfavoriteShow(_ show : SHWShow)
+    func handleUserHasNotWatched(episodes episodesArray : [SHWEpisode], forShow show : SHWShow) throws
     {
-        var favoriteShows = self.getFavoritedShows()
-        
-        guard let index = favoriteShows.index(of: show) else { return } //If didn't find show, don't continue
-
-        favoriteShows.remove(at: index)
-        
-        do
+        var watchedEpisodes = try self.getWatchedEpisodes(forShow: show)
+                
+        for episode in episodesArray
         {
-            try Disk.save(favoriteShows,
-                          to: .documents,
-                          as: kSHWDataManagerFavoritesStorageLocation)
+            guard let index = watchedEpisodes.index(of: episode) else { continue }
+            
+            watchedEpisodes.remove(at: index)
         }
-        catch let error
-        {
-            print("Failed to favorite show: \(error)")
-        }
-    }
-    
-    func isShowFavorited(_ show : SHWShow) -> Bool
-    {
-        return self.getFavoritedShows().contains(show)
+        
+        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
+        
+        try Disk.save(watchedEpisodes,
+                      to: .documents,
+                      as: location)
     }
 }

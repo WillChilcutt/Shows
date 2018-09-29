@@ -1,4 +1,4 @@
-//
+
 //  SHWEpisodesViewController.swift
 //  Shows
 //
@@ -8,19 +8,39 @@
 
 import UIKit
 
+private let kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle = "Mark Episodes as Watched"
+private let kSHWEpisodesViewControllerDoneBarButtonItemTitle = "Done"
+
+
 class SHWEpisodesViewController : UIViewController
 {
-    private let show        : SHWShow
-    private var episodes    : [SHWEpisode] = []
-
+    private let show                    : SHWShow
+    private var episodes                : [SHWEpisode] = []
+    private var watchedEpisodesArray    : [SHWEpisode] = []
+    private var inMarkAsWatchedMode     : Bool = false
+    
     //MARK: - IBOutlet
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView                    : UITableView!
+    @IBOutlet weak var bottomToolBar                : UIToolbar!
+    @IBOutlet weak var markEpisodesAsWatchedBarButtonItem : UIBarButtonItem!
     
     init(withShow show : SHWShow)
     {
         self.show = show
+        
+        do
+        {
+            self.watchedEpisodesArray = try SHWDataManager().getWatchedEpisodes(forShow: show)
+        }
+        catch
+        {
+            print("Failed to get watched episodes for \(show.name)")
+        }
+        
         super.init(nibName: String(describing: SHWEpisodesViewController.self),
                                    bundle: nil)
+        
+        self.hidesBottomBarWhenPushed = true
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -34,7 +54,7 @@ class SHWEpisodesViewController : UIViewController
         
         self.title = self.show.name
         
-        if SHWDataManager().isShowFavorited(self.show) == true
+        if (try? SHWDataManager().isShowFavorited(self.show)) == true
         {
             self.setUnfavoriteButton()
         }
@@ -86,14 +106,50 @@ class SHWEpisodesViewController : UIViewController
     
     @objc private func favoriteShow()
     {
-        SHWDataManager().favoriteShow(self.show)
-        self.setUnfavoriteButton()
+        do
+        {
+            try SHWDataManager().favoriteShow(self.show)
+
+            self.setUnfavoriteButton()
+        }
+        catch
+        {
+            print("Failed to favorite show: \(error)");
+        }
     }
     
     @objc private func unfavoriteShow()
     {
-        SHWDataManager().unfavoriteShow(self.show)
-        self.setFavoriteButton()
+        do
+        {
+            try SHWDataManager().unfavoriteShow(self.show)
+            
+            self.setFavoriteButton()
+        }
+        catch
+        {
+            print("Failed to unfavorite show: \(error)");
+        }
+    }
+    
+    //MARK: - IBAction
+    
+    @IBAction func handleMarkEpisodesAsWatchedButtonPressed(_ sender: Any)
+    {
+        guard let buttonTitle = self.markEpisodesAsWatchedBarButtonItem.title else { return }
+        
+        if buttonTitle == kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle
+        {
+            self.markEpisodesAsWatchedBarButtonItem.title = kSHWEpisodesViewControllerDoneBarButtonItemTitle
+            
+            self.inMarkAsWatchedMode = true
+        }
+        else
+        {
+            self.markEpisodesAsWatchedBarButtonItem.title = kSHWEpisodesViewControllerMarkEpisodesAsWatchedBarButtonItemTitle
+            
+            self.inMarkAsWatchedMode = false
+        }
     }
 }
 
@@ -101,7 +157,6 @@ class SHWEpisodesViewController : UIViewController
 
 extension SHWEpisodesViewController : UITableViewDataSource
 {
-    
     func numberOfSections(in tableView: UITableView) -> Int
     {
         return self.episodes.episodeCatelog().keys.count
@@ -133,6 +188,15 @@ extension SHWEpisodesViewController : UITableViewDataSource
             {
                 cell?.detailTextLabel?.text = DateFormatter.prettyPrint.string(from: date)
             }
+            
+            if self.watchedEpisodesArray.contains(episode) == true
+            {
+                cell?.accessoryType = .checkmark
+            }
+            else
+            {
+                cell?.accessoryType = .none
+            }
         }
         
         return cell!
@@ -151,5 +215,34 @@ extension SHWEpisodesViewController : UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if  self.inMarkAsWatchedMode == true,
+            let episodes = self.episodes.episodeCatelog()[indexPath.section+1] //+1 because seasons start at 1
+        {
+            let episode = episodes[indexPath.row]
+        
+            do
+            {
+                let dataManager = SHWDataManager()
+                
+                if self.watchedEpisodesArray.contains(episode) == true
+                {
+                    try dataManager.handleUserHasNotWatched(episodes: [episode], forShow: self.show)
+                }
+                else
+                {
+                    try dataManager.handleUserHasWatched(episodes: [episode], forShow: self.show)
+                }
+                
+                self.watchedEpisodesArray = try dataManager.getWatchedEpisodes(forShow: self.show)
+                
+                self.tableView.reloadRows(at: [indexPath],
+                                          with: .automatic)
+            }
+            catch
+            {
+                print("Failed to mark episode \(episode) as read/unread: \(error)")
+            }
+        }
     }
 }
