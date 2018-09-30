@@ -138,17 +138,22 @@ extension SHWDataManager
         }
     }
     
-    func save(episodes newEpisodes : [SHWEpisode], forShow show : SHWShow) throws
+    func save(episodes newEpisodes : [SHWEpisode], forShow show : SHWShow, overriding : Bool? = false) throws
     {
-        let oldWatchedEpisodes = try self.getCachedEpisodes(forShow: show).filter { $0.watched == true }
-                
-        for watchedEpisode in oldWatchedEpisodes
+        if overriding == false
         {
-            watchedEpisode.show = show
-            let matchingEpisodes = newEpisodes.filter{ $0 == watchedEpisode }
-            guard let newEquivalentEpisode = matchingEpisodes.first else {  continue }
+            let oldWatchedEpisodes = try self.getCachedEpisodes(forShow: show).filter { $0.watched == true }
             
-            newEquivalentEpisode.watched = watchedEpisode.watched
+            for watchedEpisode in oldWatchedEpisodes
+            {
+                watchedEpisode.show = show
+                let matchingEpisodes = newEpisodes.filter{ $0 == watchedEpisode }
+                guard let newEquivalentEpisode = matchingEpisodes.first else {  continue }
+                
+                newEquivalentEpisode.watched = watchedEpisode.watched
+            }
+            
+            newEpisodes.forEach { $0.show = show }
         }
         
         let showEpisodeJSONFilePath = kSHWDataManagerEpisodeStorageLocation(forShow: show)
@@ -206,15 +211,27 @@ extension SHWDataManager
 
 extension SHWDataManager
 {
+    func updateEpisodes(_ episodes : [SHWEpisode], forShow show : SHWShow) throws
+    {
+        for episode in episodes
+        {
+            try self.updateEpisode(episode, forShow: show)
+        }
+    }
+    
     func updateEpisode(_ episode : SHWEpisode, forShow show : SHWShow) throws
     {
         var episodesArray = try self.getCachedEpisodes(forShow: show)
         
-        guard let index = episodesArray.index(of: episode) else { return }
+        let filteredEpisodes = episodesArray.filter { $0 == episode}
+        
+        guard let oldEpisode = filteredEpisodes.first, let index = episodesArray.index(of: oldEpisode) else { print("Could not find old episode"); return }
+        
+        print("Found episode to update")
         
         episodesArray.remove(at: index) //Remove old
         episodesArray.insert(episode, at: index) //Insert updated
         
-        try self.save(episodes: episodesArray, forShow: show)
+        try self.save(episodes: episodesArray, forShow: show, overriding: true)
     }
 }

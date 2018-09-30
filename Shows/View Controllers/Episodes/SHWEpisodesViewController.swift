@@ -76,15 +76,16 @@ class SHWEpisodesViewController : UIViewController
     
     private func getEpisodes()
     {
-        LLNetworkManager.sharedInstance.performRequest(SHWNetworkRequest.getEpisodes(forShow: self.show),
-                                                       withResultType: [SHWEpisode].self)
-        { (response) in
+        SHWDataManager().getEpisodes(forShow: self.show,
+                                     freshDataOnly: true)
+        {  (response) in
             switch response
             {
                 case .failure(let error):
                     print("Error getting episodes: \(error)")
                     break
                 case .success(let episodes):
+                    
                     self.episodes.removeAll()
                     self.episodes.append(contentsOf: episodes)
                     
@@ -132,8 +133,7 @@ class SHWEpisodesViewController : UIViewController
             
             self.episodes.forEach { $0.watched = true }
             
-            try dataManager.save(episodes: self.episodes,
-                                 forShow: self.show)
+            try dataManager.updateEpisodes(self.episodes, forShow: self.show)
             
             self.tableView.reloadData()
         }
@@ -261,6 +261,8 @@ extension SHWEpisodesViewController : UITableViewDelegate
                 let dataManager = SHWDataManager()
                 
                 try dataManager.updateEpisode(episode, forShow: self.show)
+                
+                self.episodes = try SHWDataManager().getCachedEpisodes(forShow: self.show)
                             
                 self.tableView.reloadRows(at: [indexPath],
                                           with: .automatic)

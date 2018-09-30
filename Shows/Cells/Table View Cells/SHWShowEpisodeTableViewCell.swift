@@ -49,7 +49,7 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
         
         if  let image = episode.show?.image,
             let url = URL(string: image.medium)
-        {
+        {   
             self.showImageView.af_setImage(withURL: url,
                                          completion:
             { (response) in
