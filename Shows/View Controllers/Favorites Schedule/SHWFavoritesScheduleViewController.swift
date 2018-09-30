@@ -13,15 +13,17 @@ let kSHWFavoritesScheduleViewControllerTitle = "Schedule"
 
 private let kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier = "kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier"
 
+private let kSHWFavoritesScheduleViewControllerTodayBarButtonTitle = "Today"
+
 class SHWFavoritesScheduleViewController : UIViewController
 {
-    private var allDaysArray                : [SHWScheduleDay] = []
-    private var filteredDaysArray           : [SHWScheduleDay] = []
-    private var watchedEpisodesDictionary   : [SHWShow:[SHWEpisode]] = [:]
+    private var firstLoad           : Bool = true
+    private var allDaysArray        : [SHWScheduleDay] = []
+    private var filteredDaysArray   : [SHWScheduleDay] = []
     
     //MARK: - IBOutlet
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView : UITableView!
     
     override func viewDidLoad()
     {
@@ -35,9 +37,7 @@ class SHWFavoritesScheduleViewController : UIViewController
         self.tableView.register(UITableViewCell.self,
                                 forCellReuseIdentifier: kSHWFavoritesScheduleViewControllerNoShowsTodayCellIdentifier)
         
-        self.loadSchedule()
-        
-        let todayButton = UIBarButtonItem(title: "Today",
+        let todayButton = UIBarButtonItem(title: kSHWFavoritesScheduleViewControllerTodayBarButtonTitle,
                                           style: .plain,
                                           target: self,
                                           action: #selector(self.scrollToTodayAnimated))
@@ -54,24 +54,9 @@ class SHWFavoritesScheduleViewController : UIViewController
     {
         super.viewWillAppear(animated)
         
-        self.loadWatchedEpisodes()
-    }
-    
-    private func loadWatchedEpisodes()
-    {
-        let dataManager = SHWDataManager()
-        guard let favoriteShows = try? dataManager.getFavoritedShows() else { print("Failed to get favorite shows for loadSchedule"); return }
-
-        self.watchedEpisodesDictionary.removeAll()
-
-        for show in favoriteShows
-        {
-            guard let watchedEpisodesArray = try? dataManager.getWatchedEpisodes(forShow: show) else { print("Failed to get watched episodes for \(show.name)"); continue }
-            
-            self.watchedEpisodesDictionary[show] = watchedEpisodesArray
-        }
+        self.loadSchedule(scrollToTodayWhenDone: self.firstLoad)
         
-        self.tableView.reloadData()
+        self.firstLoad = false
     }
     
     @objc private func scrollToTodayAnimated()
@@ -91,10 +76,11 @@ class SHWFavoritesScheduleViewController : UIViewController
     
     @objc private func loadFreshSchedule()
     {
-        self.loadSchedule(fresh: true)
+        self.loadSchedule(fresh: true,
+                          scrollToTodayWhenDone: true)
     }
     
-    private func loadSchedule(fresh : Bool? = false)
+    private func loadSchedule(fresh : Bool? = false, scrollToTodayWhenDone : Bool? = false)
     {
         let dataManager = SHWDataManager()
         guard let favoriteShows = try? dataManager.getFavoritedShows() else { print("Failed to get favorite shows for loadSchedule"); return }
@@ -109,16 +95,17 @@ class SHWFavoritesScheduleViewController : UIViewController
 
                     self.allDaysArray.removeAll()
                     self.allDaysArray.append(contentsOf: result.groupByDate())
-                    self.filteredDaysArray.removeAll()
-                    self.filteredDaysArray.append(contentsOf: self.allDaysArray)
                     
-                    self.filteredDaysArray.filteredBy(watchedEpisodes: self.watchedEpisodesDictionary)
+                    self.filteredDaysArray = self.allDaysArray.filteredBy(filterType: .watched)
                     
                     DispatchQueue.main.async
                     {
                         self.tableView.reloadData()
 
-                        self.scrollToToday(animated: false)
+                        if scrollToTodayWhenDone == true
+                        {
+                            self.scrollToToday(animated: false)
+                        }
                     }
                     break
             }
@@ -176,18 +163,7 @@ extension SHWFavoritesScheduleViewController : UITableViewDataSource
         {
             let episode = self.filteredDaysArray[indexPath.section].episodes[indexPath.row]
             
-            var episodeWatched : Bool = false
-            
-            if  let show = episode.show,
-                let watchedEpisodesArray = self.watchedEpisodesDictionary[show],
-                watchedEpisodesArray.contains(episode) == true
-            {
-                print("\(show.name) - season \(episode.season) - episode \(episode.number) watched")
-                episodeWatched = true
-            }
-            
             cell.setUp(withEpisode: episode,
-                       watched:episodeWatched,
                        andTableRefresher: self)
         }
         
@@ -210,7 +186,9 @@ extension SHWFavoritesScheduleViewController : UITableViewDelegate
     {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let show = self.filteredDaysArray[indexPath.section].episodes[indexPath.row].show else { return }
+        let episodesArray =  self.filteredDaysArray[indexPath.section].episodes
+        
+        guard episodesArray.count > 0, let show = episodesArray[indexPath.row].show else { return }
         
         let vc = SHWEpisodesViewController(withShow: show)
         

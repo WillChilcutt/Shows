@@ -16,11 +16,6 @@ private func kSHWDataManagerEpisodeStorageLocation(forShow show : SHWShow) -> St
     return "\(show.id)-episodes.json"
 }
 
-private func kSHWDataManagerWatchedEpisodeStorageLocation(forShow show : SHWShow) -> String
-{
-    return "\(show.id)-watched-episodes.json"
-}
-
 class SHWDataManager: NSObject
 {
     private let dispatchGroup : DispatchGroup = DispatchGroup()
@@ -38,14 +33,9 @@ extension SHWDataManager
         }
         else
         {
-            let showEpisodeJSONFilePath = kSHWDataManagerEpisodeStorageLocation(forShow: show)
-            
             do
             {
-                let episodes = try Disk.retrieve(showEpisodeJSONFilePath,
-                                                 from: .documents,
-                                                 as: [SHWEpisode].self,
-                                                 decoder: JSONDecoder())
+                let episodes = try self.getCachedEpisodes(forShow: show)
                 
                 completionBlock(.success(withResult:episodes))
             }
@@ -66,6 +56,18 @@ extension SHWDataManager
         }
     }
     
+    func getCachedEpisodes(forShow show : SHWShow) throws -> [SHWEpisode]
+    {
+        let showEpisodeJSONFilePath = kSHWDataManagerEpisodeStorageLocation(forShow: show)
+        
+        let episodes = try Disk.retrieve(showEpisodeJSONFilePath,
+                                         from: .documents,
+                                         as: [SHWEpisode].self,
+                                         decoder: JSONDecoder())
+        
+        return episodes
+    }
+    
     private func getFreshEpisodes(forShow show : SHWShow, withCompletionBlock completionBlock : @escaping kLLNetworkManagerResultResponseBlock<[SHWEpisode]>)
     {
         LLNetworkManager.sharedInstance.performRequest(SHWNetworkRequest.getEpisodes(forShow: show),
@@ -82,26 +84,22 @@ extension SHWDataManager
                     
                     do
                     {
-                        var resultsWithShow : [SHWEpisode] = []
-                        
-                        for var episode in episodesArray
+                        for episode in episodesArray
                         {
                             episode.show = show
-                            
-                            resultsWithShow.append(episode)
                         }
                         
-                        try self.save(episodes: resultsWithShow,
+                        try self.save(episodes: episodesArray,
                                       forShow: show)
                         
-                        completionBlock(.success(withResult:resultsWithShow))
+                        completionBlock(.success(withResult:episodesArray))
                     }
                     catch let error
                     {
                         completionBlock(.failure(withError:error))
                     }
                     break
-                }
+            }
         })
     }
     
@@ -140,11 +138,22 @@ extension SHWDataManager
         }
     }
     
-    private func save(episodes : [SHWEpisode], forShow show : SHWShow) throws
+    func save(episodes newEpisodes : [SHWEpisode], forShow show : SHWShow) throws
     {
+        let oldWatchedEpisodes = try self.getCachedEpisodes(forShow: show).filter { $0.watched == true }
+                
+        for watchedEpisode in oldWatchedEpisodes
+        {
+            watchedEpisode.show = show
+            let matchingEpisodes = newEpisodes.filter{ $0 == watchedEpisode }
+            guard let newEquivalentEpisode = matchingEpisodes.first else {  continue }
+            
+            newEquivalentEpisode.watched = watchedEpisode.watched
+        }
+        
         let showEpisodeJSONFilePath = kSHWDataManagerEpisodeStorageLocation(forShow: show)
 
-        try Disk.save(episodes,
+        try Disk.save(newEpisodes,
                       to: .documents,
                       as: showEpisodeJSONFilePath)
     }
@@ -166,13 +175,9 @@ extension SHWDataManager
     
     func favoriteShow(_ show : SHWShow) throws
     {
-        var favoriteShows = try self.getFavoritedShows()
-        
-        favoriteShows.append(show)
-       
-        try Disk.save(favoriteShows,
-                      to: .documents,
-                      as: kSHWDataManagerFavoritesStorageLocation)
+        try Disk.append(show,
+                        to: kSHWDataManagerFavoritesStorageLocation,
+                        in: .documents)
     }
     
     func unfavoriteShow(_ show : SHWShow) throws
@@ -186,6 +191,9 @@ extension SHWDataManager
         try Disk.save(favoriteShows,
                       to: .documents,
                       as: kSHWDataManagerFavoritesStorageLocation)
+
+        try Disk.remove(kSHWDataManagerEpisodeStorageLocation(forShow: show),
+                        from: .documents)
     }
     
     func isShowFavorited(_ show : SHWShow) throws -> Bool
@@ -194,68 +202,19 @@ extension SHWDataManager
     }
 }
 
-//Watched
+//Updating episodes
 
 extension SHWDataManager
 {
-    func getWatchedEpisodes(forShow show : SHWShow) throws -> [SHWEpisode]
+    func updateEpisode(_ episode : SHWEpisode, forShow show : SHWShow) throws
     {
-        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
+        var episodesArray = try self.getCachedEpisodes(forShow: show)
         
-        do
-        {
-            let episodesArray = try Disk.retrieve(location,
-                                                  from: .documents,
-                                                  as: [SHWEpisode].self,
-                                                  decoder: JSONDecoder())
-            
-            var resultsWithShow : [SHWEpisode] = []
-            
-            for var episode in episodesArray
-            {
-                episode.show = show
-                
-                resultsWithShow.append(episode)
-            }
-            
-            return resultsWithShow
-        }
-        catch let error
-        {
-            print("Failed to get shows: \(error)")
-            
-            return []
-        }
-    }
-    
-    func handleUserHasWatched(episodes episodesArray : [SHWEpisode], forShow show : SHWShow) throws
-    {
-        var watchedEpisodes = try self.getWatchedEpisodes(forShow: show)
+        guard let index = episodesArray.index(of: episode) else { return }
         
-        watchedEpisodes.append(contentsOf: episodesArray)
+        episodesArray.remove(at: index) //Remove old
+        episodesArray.insert(episode, at: index) //Insert updated
         
-        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
-        
-        try Disk.save(watchedEpisodes,
-                      to: .documents,
-                      as: location)
-    }
-    
-    func handleUserHasNotWatched(episodes episodesArray : [SHWEpisode], forShow show : SHWShow) throws
-    {
-        var watchedEpisodes = try self.getWatchedEpisodes(forShow: show)
-                
-        for episode in episodesArray
-        {
-            guard let index = watchedEpisodes.index(of: episode) else { continue }
-            
-            watchedEpisodes.remove(at: index)
-        }
-        
-        let location = kSHWDataManagerWatchedEpisodeStorageLocation(forShow: show)
-        
-        try Disk.save(watchedEpisodes,
-                      to: .documents,
-                      as: location)
+        try self.save(episodes: episodesArray, forShow: show)
     }
 }

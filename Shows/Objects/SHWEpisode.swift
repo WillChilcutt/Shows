@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SHWEpisode : Codable
+class SHWEpisode : Codable
 {
     let id          : Int
     let url         : String
@@ -23,6 +23,7 @@ struct SHWEpisode : Codable
     let airstamp    : String?
     
     var show        : SHWShow?
+    var watched     : Bool? = false
     
     var originalDate : Date?
     {   get
@@ -34,6 +35,8 @@ struct SHWEpisode : Codable
     }
 }
 
+//MARK: - Equatable
+
 extension SHWEpisode : Equatable
 {
     static func == (lhs: SHWEpisode, rhs: SHWEpisode) -> Bool
@@ -42,6 +45,8 @@ extension SHWEpisode : Equatable
     }
 }
 
+//MARK: - Hashable
+
 extension SHWEpisode : Hashable
 {
     var hashValue: Int
@@ -49,6 +54,8 @@ extension SHWEpisode : Hashable
         return self.id
     }
 }
+
+//MARK: - Array where Element == SHWEpisode
 
 extension Array where Element == SHWEpisode
 {

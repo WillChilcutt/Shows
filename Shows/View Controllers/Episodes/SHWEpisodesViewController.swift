@@ -17,7 +17,6 @@ class SHWEpisodesViewController : UIViewController
 {
     private let show                            : SHWShow
     private var episodes                        : [SHWEpisode] = []
-    private var watchedEpisodesArray            : [SHWEpisode] = []
     private var inMarkAsWatchedMode             : Bool = false
     private var markAllAsWatchedBarButtonItem   : UIBarButtonItem?
     
@@ -29,15 +28,6 @@ class SHWEpisodesViewController : UIViewController
     init(withShow show : SHWShow)
     {
         self.show = show
-        
-        do
-        {
-            self.watchedEpisodesArray = try SHWDataManager().getWatchedEpisodes(forShow: show)
-        }
-        catch
-        {
-            print("Failed to get watched episodes for \(show.name)")
-        }
         
         super.init(nibName: String(describing: SHWEpisodesViewController.self),
                                    bundle: nil)
@@ -140,16 +130,10 @@ class SHWEpisodesViewController : UIViewController
         {
             let dataManager = SHWDataManager()
             
-            if self.watchedEpisodesArray == self.episodes
-            {
-                try dataManager.handleUserHasNotWatched(episodes: self.episodes, forShow: self.show)
-            }
-            else
-            {
-                try dataManager.handleUserHasWatched(episodes: self.episodes, forShow: self.show)
-            }
+            self.episodes.forEach { $0.watched = true }
             
-            self.watchedEpisodesArray = try dataManager.getWatchedEpisodes(forShow: self.show)
+            try dataManager.save(episodes: self.episodes,
+                                 forShow: self.show)
             
             self.tableView.reloadData()
         }
@@ -227,7 +211,7 @@ extension SHWEpisodesViewController : UITableViewDataSource
                 cell?.detailTextLabel?.text = DateFormatter.prettyPrint.string(from: date)
             }
             
-            if self.watchedEpisodesArray.contains(episode) == true
+            if episode.watched == true
             {
                 cell?.accessoryType = .checkmark
             }
@@ -258,22 +242,26 @@ extension SHWEpisodesViewController : UITableViewDelegate
             let episodes = self.episodes.episodeCatelog()[indexPath.section+1] //+1 because seasons start at 1
         {
             let episode = episodes[indexPath.row]
-        
+            
+            let watchedStatus : Bool
+            
+            if episode.watched == nil
+            {
+                watchedStatus = true
+            }
+            else
+            {
+                watchedStatus = !episode.watched! //Opposite of what the watch status current is, unwrapped because the previous if statement determined watch -isn't- nil
+            }
+            
+            episode.watched = watchedStatus
+            
             do
             {
                 let dataManager = SHWDataManager()
                 
-                if self.watchedEpisodesArray.contains(episode) == true
-                {
-                    try dataManager.handleUserHasNotWatched(episodes: [episode], forShow: self.show)
-                }
-                else
-                {
-                    try dataManager.handleUserHasWatched(episodes: [episode], forShow: self.show)
-                }
-                
-                self.watchedEpisodesArray = try dataManager.getWatchedEpisodes(forShow: self.show)
-                
+                try dataManager.updateEpisode(episode, forShow: self.show)
+                            
                 self.tableView.reloadRows(at: [indexPath],
                                           with: .automatic)
             }

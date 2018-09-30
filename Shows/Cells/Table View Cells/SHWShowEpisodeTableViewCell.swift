@@ -28,11 +28,11 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
         self.episodeNameLabel.text  = ""
     }
 
-    func setUp(withEpisode episode : SHWEpisode, watched : Bool, andTableRefresher tableRefresh : SHWTableRefresher)
+    func setUp(withEpisode episode : SHWEpisode, andTableRefresher tableRefresh : SHWTableRefresher)
     {
         self.showNameLabel.text                 = episode.show?.name
         self.episodeNameLabel.text              = episode.name
-        self.watchedEpisodeCoverView.isHidden   = !watched
+        self.watchedEpisodeCoverView.isHidden   = !episode.watched
         
         if let date = episode.originalDate
         {

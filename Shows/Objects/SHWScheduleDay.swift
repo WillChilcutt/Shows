@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum SHWScheduleDayFilterType
+{
+    case watched
+}
+
 class SHWScheduleDay : Equatable
 {
     let date        : Date
@@ -27,37 +32,30 @@ class SHWScheduleDay : Equatable
 
 extension Array where Element == SHWScheduleDay
 {
-    mutating func filteredBy(watchedEpisodes : [SHWShow:[SHWEpisode]])
+    mutating func filteredBy(filterType : SHWScheduleDayFilterType) -> [SHWScheduleDay]
     {
         var daysToKeep : [SHWScheduleDay] = []
         
-        for scheduleDay in self
+        switch filterType
         {
-            var episodesNotWatched : [SHWEpisode] = []
-            
-            for episode in scheduleDay.episodes
-            {
-                guard let show = episode.show else { continue }
-
-                print("Checking to see if \(show.name) - \(episode.season) - \(episode.number) has been watched")
-                
-                if  let showWatchedEpisodes = watchedEpisodes[show],
-                    showWatchedEpisodes.contains(episode) == false
+            case .watched:
+         
+                for scheduleDay in self
                 {
-                    episodesNotWatched.append(episode)
+                    let episodesNotWatched = scheduleDay.episodes.filter { $0.watched == false }
+                    
+                    scheduleDay.episodes.removeAll()
+                    scheduleDay.episodes.append(contentsOf: episodesNotWatched)
+                    
+                    if scheduleDay.date.startOfDay == Date().startOfDay || scheduleDay.episodes.isEmpty == false
+                    {
+                        daysToKeep.append(scheduleDay)
+                    }
                 }
-            }
-            
-            scheduleDay.episodes.removeAll()
-            scheduleDay.episodes.append(contentsOf: episodesNotWatched)
-            
-            if scheduleDay.date.startOfDay == Date().startOfDay || scheduleDay.episodes.isEmpty == false
-            {
-                daysToKeep.append(scheduleDay)
-            }
+                
+            break
         }
         
-        self.removeAll()
-        self.append(contentsOf: daysToKeep)
+       return daysToKeep
     }
 }
