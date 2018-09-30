@@ -225,9 +225,7 @@ extension SHWDataManager
         
         let filteredEpisodes = episodesArray.filter { $0 == episode}
         
-        guard let oldEpisode = filteredEpisodes.first, let index = episodesArray.index(of: oldEpisode) else { print("Could not find old episode"); return }
-        
-        print("Found episode to update")
+        guard let oldEpisode = filteredEpisodes.first, let index = episodesArray.index(of: oldEpisode) else { return }
         
         episodesArray.remove(at: index) //Remove old
         episodesArray.insert(episode, at: index) //Insert updated
