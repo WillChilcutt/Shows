@@ -42,7 +42,7 @@ extension Array where Element == SHWScheduleDay
          
                 for scheduleDay in self
                 {
-                    let episodesNotWatched = scheduleDay.episodes.filter { $0.watched == false }
+                    let episodesNotWatched = scheduleDay.episodes.filter { $0.watched == nil || $0.watched == false }
                     
                     scheduleDay.episodes.removeAll()
                     scheduleDay.episodes.append(contentsOf: episodesNotWatched)
