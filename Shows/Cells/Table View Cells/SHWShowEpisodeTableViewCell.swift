@@ -32,7 +32,15 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
     {
         self.showNameLabel.text                 = episode.show?.name
         self.episodeNameLabel.text              = episode.name
-        self.watchedEpisodeCoverView.isHidden   = !episode.watched
+        
+        if episode.watched == nil
+        {
+            self.watchedEpisodeCoverView.isHidden = true
+        }
+        else
+        {
+            self.watchedEpisodeCoverView.isHidden   = !episode.watched!
+        }
         
         if let date = episode.originalDate
         {
