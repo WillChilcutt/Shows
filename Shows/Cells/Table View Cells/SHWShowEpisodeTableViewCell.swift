@@ -13,12 +13,13 @@ let kSHWShowEpisodeTableViewCellClassName = String(describing: SHWShowEpisodeTab
 class SHWShowEpisodeTableViewCell : UITableViewCell
 {
     //MARK: - IBOutlet
-    @IBOutlet weak var timeLabel        : UILabel!
-    @IBOutlet weak var showImageView    : UIImageView!
-    @IBOutlet weak var showNameLabel    : UILabel!
-    @IBOutlet weak var episodeNameLabel : UILabel!
-    @IBOutlet weak var watchedEpisodeCoverView: UIView!
-    
+    @IBOutlet weak var timeLabel                        : UILabel!
+    @IBOutlet weak var showImageView                    : UIImageView!
+    @IBOutlet weak var showNameLabel                    : UILabel!
+    @IBOutlet weak var episodeNameLabel                 : UILabel!
+    @IBOutlet weak var watchedEpisodeCoverView          : UIView!
+    @IBOutlet weak var seasonNumberEpisodeNumberLabel   : UILabel!
+
     override func awakeFromNib()
     {
         super.awakeFromNib()
@@ -67,6 +68,10 @@ class SHWShowEpisodeTableViewCell : UITableViewCell
         {
             self.showImageView.image = nil
         }
-
+        
+        let seasonString    = String(format: "%02d", episode.season)
+        let episodeString   = String(format: "%02d", episode.number)
+        
+        self.seasonNumberEpisodeNumberLabel.text = "S" + seasonString + "E" + episodeString
     }
 }

@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,9 +40,15 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="8:00pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lN-Q4-nmM">
-                        <rect key="frame" x="76.5" y="81" width="235.5" height="14.5"/>
+                        <rect key="frame" x="76.5" y="81" width="118" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                         <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="S03E19" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lno-l3-ybd">
+                        <rect key="frame" x="194" y="81" width="118" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4VN-mC-vbv">
@@ -51,12 +58,13 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="4VN-mC-vbv" secondAttribute="trailing" id="78b-LS-fXh"/>
+                    <constraint firstItem="lno-l3-ybd" firstAttribute="leading" secondItem="5lN-Q4-nmM" secondAttribute="trailing" constant="-0.5" id="8OW-4j-CGc"/>
                     <constraint firstItem="9Dh-2f-N0z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="A4V-sL-Faw"/>
-                    <constraint firstAttribute="bottom" secondItem="4VN-mC-vbv" secondAttribute="bottom" id="ABy-4h-ItF"/>
-                    <constraint firstItem="5lN-Q4-nmM" firstAttribute="trailing" secondItem="HCW-Vj-BEC" secondAttribute="trailing" id="AaL-PF-dTX"/>
-                    <constraint firstItem="4VN-mC-vbv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Aur-rm-S0y"/>
+                    <constraint firstItem="4VN-mC-vbv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="FfT-2p-0ez"/>
+                    <constraint firstItem="lno-l3-ybd" firstAttribute="top" secondItem="5lN-Q4-nmM" secondAttribute="top" id="HVL-yz-7nz"/>
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="leading" secondItem="HCW-Vj-BEC" secondAttribute="leading" id="JO0-JU-w5q"/>
+                    <constraint firstItem="lno-l3-ybd" firstAttribute="trailing" secondItem="v6W-1O-SKs" secondAttribute="trailing" id="JqV-Nq-j1q"/>
+                    <constraint firstAttribute="bottom" secondItem="4VN-mC-vbv" secondAttribute="bottom" id="LQk-bl-M4L"/>
                     <constraint firstAttribute="bottom" secondItem="9Dh-2f-N0z" secondAttribute="bottom" constant="4" id="RGd-Oq-KBT"/>
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="top" secondItem="HCW-Vj-BEC" secondAttribute="bottom" constant="8" id="T1w-di-BLy"/>
                     <constraint firstItem="HCW-Vj-BEC" firstAttribute="leading" secondItem="9Dh-2f-N0z" secondAttribute="trailing" constant="8" id="WQC-WV-bZf"/>
@@ -64,15 +72,18 @@
                     <constraint firstAttribute="trailing" secondItem="HCW-Vj-BEC" secondAttribute="trailing" constant="8" id="XNc-Vv-mVu"/>
                     <constraint firstItem="9Dh-2f-N0z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="aVp-7h-qtU"/>
                     <constraint firstItem="5lN-Q4-nmM" firstAttribute="top" secondItem="v6W-1O-SKs" secondAttribute="bottom" constant="8" id="aub-qu-h6L"/>
+                    <constraint firstAttribute="trailing" secondItem="4VN-mC-vbv" secondAttribute="trailing" id="b8A-CZ-oOb"/>
                     <constraint firstItem="v6W-1O-SKs" firstAttribute="trailing" secondItem="HCW-Vj-BEC" secondAttribute="trailing" id="gPZ-Ex-PG4"/>
                     <constraint firstItem="HCW-Vj-BEC" firstAttribute="top" secondItem="9Dh-2f-N0z" secondAttribute="top" id="lG3-8I-LAk"/>
                     <constraint firstItem="5lN-Q4-nmM" firstAttribute="bottom" secondItem="9Dh-2f-N0z" secondAttribute="bottom" id="mQ4-t6-BoK"/>
-                    <constraint firstItem="4VN-mC-vbv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tN2-Yj-QWq"/>
+                    <constraint firstItem="5lN-Q4-nmM" firstAttribute="width" secondItem="v6W-1O-SKs" secondAttribute="width" multiplier="0.5" id="s5H-Ze-qry"/>
+                    <constraint firstItem="4VN-mC-vbv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xLt-6j-uLK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="episodeNameLabel" destination="v6W-1O-SKs" id="MJz-2c-O8M"/>
+                <outlet property="seasonNumberEpisodeNumberLabel" destination="lno-l3-ybd" id="B8A-Mh-H3V"/>
                 <outlet property="showImageView" destination="9Dh-2f-N0z" id="UhL-sr-AuA"/>
                 <outlet property="showNameLabel" destination="HCW-Vj-BEC" id="Xq7-np-MJd"/>
                 <outlet property="timeLabel" destination="5lN-Q4-nmM" id="qbg-bQ-i8K"/>
